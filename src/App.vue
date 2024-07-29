@@ -3,6 +3,7 @@
 import Container from './components/container.vue';
 import Header from './components/header.vue';
 import RecipeModal from './components/recipe-modal.vue';
+import Notification from './components/notification.vue';
 </script>
 
 <template>
@@ -14,5 +15,6 @@ import RecipeModal from './components/recipe-modal.vue';
     </main>
   </Container>
   <RecipeModal />
+  <Notification />
 </template>
 

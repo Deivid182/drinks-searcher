@@ -3,12 +3,24 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useDrinksStore } from '../stores/drinks';
+import { useNotificationsStore } from '../stores/notifications';
 import Container from './container.vue';
 
 const route = useRoute()
 const store = useDrinksStore()
+const notifications = useNotificationsStore()
+
 
 const handleSubmit = async () => {
+  if(Object.values(store.search).includes('')) {
+    notifications.$patch({
+      text: 'Please fill in all fields',
+      show: true,
+      error: true
+    })
+    return
+  }
+  // TODO: Add validations
   await store.getRecipes()
 }
 

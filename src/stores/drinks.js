@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import DrinkService from '../services/DrinkService';
 import { useModalStore } from './modal';
 
@@ -30,19 +30,23 @@ export const useDrinksStore = defineStore('drinks', () => {
   }
 
   async function getRecipe(id) {
-    const response = await DrinkService.getRecipe(id)
-    console.log(response.data.drinks[0])
-    recipe.value = response.data.drinks[0]
+    const { data: { drinks } } = await DrinkService.getRecipe(id)
+    recipe.value = drinks[0]
 
     modalStore.toggleModal()
-
   }
+
+  const noRecipes = computed(() => {
+    return recipes.value.length === 0
+  })
 
   return {
     categories,
     search,
     getRecipes,
     getRecipe,
-    recipes
+    recipes,
+    recipe,
+    noRecipes
   }
 })
